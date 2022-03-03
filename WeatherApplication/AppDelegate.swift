@@ -11,19 +11,28 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var weatherViewController = WeatherViewController()
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = weatherViewController
+        
+        window?.rootViewController = makeNavigationController()
         
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
+    
+    func makeWeatherViewController() -> UIViewController {
+        let viewController = WeatherViewController()
+        return viewController
+    }
+    
+    func makeNavigationController() -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: makeWeatherViewController())
+        navigationController.navigationBar.barTintColor = .systemBlue
+        UINavigationBar.appearance().tintColor = .white
+        return navigationController
+    }
 
 }
 
