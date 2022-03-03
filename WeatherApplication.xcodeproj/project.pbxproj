@@ -11,6 +11,8 @@
 		27E6C49A27D0B3CA005965F6 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C49927D0B3CA005965F6 /* WeatherViewController.swift */; };
 		27E6C49F27D0B3D2005965F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C49E27D0B3D2005965F6 /* Assets.xcassets */; };
 		27E6C4A227D0B3D2005965F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C4A027D0B3D2005965F6 /* LaunchScreen.storyboard */; };
+		27E6C4AB27D0C6D5005965F6 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C4A927D0C6D5005965F6 /* WeatherCell.swift */; };
+		27E6C4AC27D0C6D5005965F6 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C4AA27D0C6D5005965F6 /* WeatherCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		27E6C49E27D0B3D2005965F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27E6C4A127D0B3D2005965F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27E6C4A327D0B3D2005965F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27E6C4A927D0C6D5005965F6 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
+		27E6C4AA27D0C6D5005965F6 /* WeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				27E6C49527D0B3CA005965F6 /* AppDelegate.swift */,
 				27E6C49927D0B3CA005965F6 /* WeatherViewController.swift */,
+				27E6C4A927D0C6D5005965F6 /* WeatherCell.swift */,
+				27E6C4AA27D0C6D5005965F6 /* WeatherCell.xib */,
 				27E6C49E27D0B3D2005965F6 /* Assets.xcassets */,
 				27E6C4A027D0B3D2005965F6 /* LaunchScreen.storyboard */,
 				27E6C4A327D0B3D2005965F6 /* Info.plist */,
@@ -121,6 +127,7 @@
 			files = (
 				27E6C4A227D0B3D2005965F6 /* LaunchScreen.storyboard in Resources */,
 				27E6C49F27D0B3D2005965F6 /* Assets.xcassets in Resources */,
+				27E6C4AC27D0C6D5005965F6 /* WeatherCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +140,7 @@
 			files = (
 				27E6C49A27D0B3CA005965F6 /* WeatherViewController.swift in Sources */,
 				27E6C49627D0B3CA005965F6 /* AppDelegate.swift in Sources */,
+				27E6C4AB27D0C6D5005965F6 /* WeatherCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
