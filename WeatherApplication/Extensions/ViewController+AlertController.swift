@@ -18,7 +18,6 @@ extension WeatherViewController {
             let textField = alert.textFields?.first
             guard let cityName = textField?.text else { return }
             if !cityName.isEmpty {
-                //print("search info for the \(cityName)")
                 let city = cityName.split(separator: " ").joined(separator: "%20")
                 completionHandler(city)
             }
