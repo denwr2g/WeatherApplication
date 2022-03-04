@@ -17,6 +17,10 @@ class TaskManager {
     
     func addItemToTable(weatherItem: WeatherModel?) {
         guard let weatherItem = weatherItem else { return }
+        
+        for item in tableItems {
+            if weatherItem.cityName == item?.cityName { return }
+        }
         tableItems.append(weatherItem)
     }
     
