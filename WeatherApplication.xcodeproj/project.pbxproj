@@ -14,6 +14,7 @@
 		27E6C4AB27D0C6D5005965F6 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C4A927D0C6D5005965F6 /* WeatherCell.swift */; };
 		27E6C4AC27D0C6D5005965F6 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C4AA27D0C6D5005965F6 /* WeatherCell.xib */; };
 		27E6C4B627D0CB47005965F6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 27E6C4B527D0CB47005965F6 /* SnapKit */; };
+		27E6C4DB27D2075D005965F6 /* ViewController+AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C4DA27D2075D005965F6 /* ViewController+AlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		27E6C4A327D0B3D2005965F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27E6C4A927D0C6D5005965F6 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		27E6C4AA27D0C6D5005965F6 /* WeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
+		27E6C4DA27D2075D005965F6 /* ViewController+AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+AlertController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				27E6C49527D0B3CA005965F6 /* AppDelegate.swift */,
 				27E6C4AD27D0C9F9005965F6 /* WeatherViewController */,
 				27E6C4AE27D0CA11005965F6 /* Views */,
+				27E6C4D927D2072E005965F6 /* Extensions */,
 				27E6C4AF27D0CA61005965F6 /* SupportingFiles */,
 				27E6C4A327D0B3D2005965F6 /* Info.plist */,
 			);
@@ -91,6 +94,14 @@
 				27E6C49E27D0B3D2005965F6 /* Assets.xcassets */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		27E6C4D927D2072E005965F6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				27E6C4DA27D2075D005965F6 /* ViewController+AlertController.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27E6C49A27D0B3CA005965F6 /* WeatherViewController.swift in Sources */,
+				27E6C4DB27D2075D005965F6 /* ViewController+AlertController.swift in Sources */,
 				27E6C49627D0B3CA005965F6 /* AppDelegate.swift in Sources */,
 				27E6C4AB27D0C6D5005965F6 /* WeatherCell.swift in Sources */,
 			);

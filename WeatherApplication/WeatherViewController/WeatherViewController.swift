@@ -20,6 +20,8 @@ class WeatherViewController: UIViewController {
     
 }
 
+// MARK: - WeatherViewController Setup
+
 private extension WeatherViewController {
     func configTable() {
         view.addSubview(tableView)
@@ -36,10 +38,19 @@ private extension WeatherViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCity))
     }
     
+    func printStr(str: String) {
+        print(str)
+    }
+    
     @objc func addCity() {
-        print("printed")
+        presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [weak self] city in
+            guard let self = self else {return}
+            self.printStr(str: city)
+        }
     }
 }
+
+// MARK: - WeatherViewController DataSource and Delegates
 
 extension WeatherViewController: UITableViewDataSource {
     
