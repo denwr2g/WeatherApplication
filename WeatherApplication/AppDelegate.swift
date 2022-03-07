@@ -24,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func makeWeatherViewController() -> UIViewController {
         let viewController = WeatherViewController()
+        let weatherViewModel = WeatherViewModel()
+        
+        viewController.configure(viewModel: weatherViewModel)
+        
+        weatherViewModel.onUpdateTable = { viewController.updateTableView() }
+        
         return viewController
     }
     
