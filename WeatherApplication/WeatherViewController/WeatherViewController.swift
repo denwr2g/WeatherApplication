@@ -6,53 +6,64 @@
 //
 
 import UIKit
+import SnapKit
 
 class WeatherViewController: UIViewController {
-
+    
     private var tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configTable()
-        configUI()
+        configNavigationItems()
     }
-
+    
 }
 
 private extension WeatherViewController {
     func configTable() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
-        tableView.backgroundColor = .systemCyan
+        tableView.backgroundColor = .systemBlue
+
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "weatherCell")
     }
     
-    func configUI() {
-        view.backgroundColor = .systemRed
+    func configNavigationItems() {
+        navigationItem.title = "Weather App"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCity))
     }
-
+    
+    @objc func addCity() {
+        print("printed")
+    }
 }
 
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell else {return UITableViewCell.init()}
         
-        cell.label.text = "Test"
+        cell.cityNameLabel.text = "Toronto"
+        cell.temperatureLabel.text = "16°"
         
+        cell.selectionStyle = .none
         return cell
     }
-    
-    
 }
 
 extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
