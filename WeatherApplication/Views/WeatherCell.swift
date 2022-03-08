@@ -13,7 +13,7 @@ class WeatherCell: UITableViewCell {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     
-    func set(_ weather: WeatherModel) {
+    func configCell(_ weather: WeatherModel) {
         self.cityNameLabel.text = weather.cityName
         self.temperatureLabel.text = weather.temperatureString
         self.weatherImageView.image = UIImage(systemName: weather.conditionName)

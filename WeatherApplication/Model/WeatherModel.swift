@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct WeatherModel {
+struct WeatherModel: Codable {
     let conditionId: Int
     let cityName: String
     let temperature: Double
     
     var temperatureString: String {
-        return String(format: "%.0f", temperature) + "°C"
+        return String(format: "%.0f", temperature) + "° C"
     }
     
     var conditionName: String {
@@ -36,5 +36,7 @@ struct WeatherModel {
             return "nosign"
         }
     }
+    
+    
 
 }

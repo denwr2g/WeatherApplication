@@ -11,7 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -28,8 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         viewController.configure(viewModel: weatherViewModel)
         
-        weatherViewModel.onUpdateTable = { viewController.updateTableView() }
-        
+        weatherViewModel.onShowAlert = {
+            viewController.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { city in
+                weatherViewModel.fetchWeather(for: city)
+            }
+        }
         return viewController
     }
     
@@ -39,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .white
         return navigationController
     }
-
+    
+    
 }
 
