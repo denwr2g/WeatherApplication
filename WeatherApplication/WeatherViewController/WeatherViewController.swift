@@ -60,8 +60,15 @@ private extension WeatherViewController {
     }
     
     @objc func addCity() {
+        viewModel?.onShowAlert = {
+            self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [weak self] city in
+                guard let self = self else { return }
+                self.viewModel?.fetchWeather(for: city)
+            }
+        }
         viewModel?.shouldShowAlert()
     }
+    
 }
 
 // MARK: - WeatherViewController DataSource

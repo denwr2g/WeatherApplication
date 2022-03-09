@@ -25,14 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func makeWeatherViewController() -> UIViewController {
         let viewController = WeatherViewController()
         let weatherViewModel = WeatherViewModel()
-        
         viewController.configure(viewModel: weatherViewModel)
-        
-        weatherViewModel.onShowAlert = {
-            viewController.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { city in
-                weatherViewModel.fetchWeather(for: city)
-            }
-        }
         return viewController
     }
     

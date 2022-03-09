@@ -9,8 +9,8 @@ import Foundation
 
 struct NetworkManager {
     
-    static func fetchWeather(for city: String, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
-        let url = URL.withCity(city)
+    static func fetchWeather(for cityName: String, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
+        let url = withCity(cityName)
         guard let url = url else { return }
         
         let session = URLSession(configuration: .default)
@@ -34,3 +34,6 @@ struct NetworkManager {
     }
     
 }
+
+
+
