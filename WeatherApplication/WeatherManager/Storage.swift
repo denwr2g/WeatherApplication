@@ -2,30 +2,39 @@
 //  Storage.swift
 //  WeatherApplication
 //
-//  Created by deniss.lobacs on 08/03/2022.
+//  Created by deniss.lobacs on 09/03/2022.
 //
 
 import Foundation
 
 @propertyWrapper
-struct Storage<Value: Codable> {
-    let key: String
-    var container: UserDefaults = .standard
+struct Storage<T: Codable> {
+    private let key: String
+    private let defaultValue: T
 
-    var wrappedValue: Value? {
+    init(key: String, defaultValue: T) {
+        self.key = key
+        self.defaultValue = defaultValue
+    }
+
+    var wrappedValue: T {
         get {
             // Read value from UserDefaults
-            guard let data = container.data(forKey: key) else { return nil }
-            return try? JSONDecoder().decode(Value.self, from: data)
+            guard let data = UserDefaults.standard.object(forKey: key) as? Data else {
+                // Return defaultValue when no data in UserDefaults
+                return defaultValue
+            }
+
+            // Convert data to the desire data type
+            let value = try? JSONDecoder().decode(T.self, from: data)
+            return value ?? defaultValue
         }
         set {
+            // Convert newValue to data
+            let data = try? JSONEncoder().encode(newValue)
+            
             // Set value to UserDefaults
-            if let newValue = newValue, let data = try? JSONEncoder().encode(newValue) {
-                container.set(data, forKey: key)
-                print("value now has a new value which is \(newValue)")
-            } else {
-                container.removeObject(forKey: key)
-            }
+            UserDefaults.standard.set(data, forKey: key)
         }
     }
 }

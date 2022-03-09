@@ -13,7 +13,7 @@ struct WeatherModel: Codable {
     let temperature: Double
     
     var temperatureString: String {
-        return String(format: "%.0f", temperature) + "° C"
+        return String(format: "%.2f", temperature) + "° C"
     }
     
     var conditionName: String {
