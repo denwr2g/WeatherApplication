@@ -11,9 +11,14 @@ import UIKit
 final class WeatherViewModel {
     
     private let weatherManager = WeatherManager.shared
+    private let userDefaultsManager = UserDefaultsManager.shared
     
     var onUpdateTable: (() -> Void)?
     var onShowAlert: (() -> Void)?
+    
+    init() {
+        UserDefaultsManager.shared.getItems()
+    }
     
     func shouldUpdateTable() {
         self.onUpdateTable?()

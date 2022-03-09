@@ -19,10 +19,6 @@ class WeatherViewController: UIViewController {
         configNavigationItems()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     // MARK: - WeatherViewController Methods
     
     private func updateTableViewContent() {
