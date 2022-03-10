@@ -19,16 +19,18 @@ class WeatherViewController: UIViewController {
         configNavigationItems()
     }
     
-// MARK: - WeatherViewController Methods
-
-    public func updateTableView() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+    // MARK: - WeatherViewController Methods
+    
+    private func updateTableViewContent() {
+        tableView.reloadData()
     }
     
     func configure(viewModel: WeatherViewModel) {
         self.viewModel = viewModel
+        viewModel.onUpdateTable = { [weak self] in
+            guard let self = self else { return }
+            self.updateTableViewContent()
+        }
     }
     
 }
@@ -40,25 +42,29 @@ private extension WeatherViewController {
         view.addSubview(tableView)
         tableView.frame = view.bounds
         tableView.backgroundColor = .systemBlue
-
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.register(UINib(nibName: Constants.weatherNibName, bundle: nil), forCellReuseIdentifier: Constants.weatherCell)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "weatherCell")
     }
     
-// MARK: - WeatherViewController Setup
-
+    // MARK: - WeatherViewController Setup
+    
     func configNavigationItems() {
         navigationItem.title = "Weather App"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCity))
     }
-        
+    
     @objc func addCity() {
-        presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [weak self] city in
-            guard let self = self else {return}
-            self.viewModel?.fetchWeather(for: city)
+        viewModel?.onShowAlert = {
+            self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [weak self] city in
+                guard let self = self else { return }
+                self.viewModel?.fetchWeather(for: city)
+            }
         }
+        viewModel?.shouldShowAlert()
     }
+    
 }
 
 // MARK: - WeatherViewController DataSource
@@ -66,15 +72,15 @@ private extension WeatherViewController {
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = viewModel?.getTableItemsCount() else { return 0 } 
+        guard let count = viewModel?.getTableItemsCount() else { return 0 }
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.weatherCell, for: indexPath) as? WeatherCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell,
               let weather = viewModel?.getValue(index: indexPath.row) else { return UITableViewCell.init() }
         
-        cell.set(weather)
+        cell.configCell(weather)
         cell.selectionStyle = .none
         return cell
     }

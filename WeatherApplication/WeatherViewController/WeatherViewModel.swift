@@ -6,37 +6,54 @@
 //
 
 import Foundation
+import UIKit
 
 final class WeatherViewModel {
     
-    private let taskManager = TaskManager.shared
+    private let weatherManager = WeatherManager.shared
+    private let userDefaultsManager = UserDefaultsManager.shared
     
     var onUpdateTable: (() -> Void)?
+    var onShowAlert: (() -> Void)?
+    
+    init() {
+        UserDefaultsManager.shared.getItems()
+    }
     
     func shouldUpdateTable() {
         self.onUpdateTable?()
     }
     
+    func shouldShowAlert() {
+        self.onShowAlert?()
+    }
+    
     func getValue(index: Int) -> WeatherModel? {
-       return taskManager.getValue(index: index)
+        return weatherManager.getValue(index: index)
     }
     
     func getTableItemsCount() -> Int? {
-        return taskManager.tableItems.count
+        return weatherManager.tableItems.count
     }
     
     func addItemToTable(item: WeatherModel) {
-        taskManager.addItemToTable(weatherItem: item)
+        weatherManager.addItemToTable(weatherItem: item)
     }
     
     func fetchWeather(for city: String) {
-        WeatherManager.shared.fetchWeather(for: city) { [weak self] weather in
-            guard let self = self else {return}
-            guard let weather = weather else {return}
-            self.addItemToTable(item: weather)
-            self.shouldUpdateTable()
+        NetworkManager.fetchWeather(for: city) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let weather):
+                    self.addItemToTable(item: weather)
+                    self.shouldUpdateTable()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
-
 }

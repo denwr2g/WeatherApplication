@@ -7,15 +7,20 @@
 
 import Foundation
 
-class TaskManager {
+class WeatherManager {
     
-    static var shared = TaskManager()
+    static var shared = WeatherManager()
     
     private init() {}
     
-    var tableItems = [WeatherModel?]()
+    var tableItems = [WeatherModel?]() {
+        didSet {
+            UserDefaultsManager.shared.save()
+        }
+    }
     
     func addItemToTable(weatherItem: WeatherModel?) {
+              
         guard let weatherItem = weatherItem else { return }
         
         for item in tableItems {

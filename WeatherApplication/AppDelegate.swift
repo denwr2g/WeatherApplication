@@ -11,7 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -25,11 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func makeWeatherViewController() -> UIViewController {
         let viewController = WeatherViewController()
         let weatherViewModel = WeatherViewModel()
-        
         viewController.configure(viewModel: weatherViewModel)
-        
-        weatherViewModel.onUpdateTable = { viewController.updateTableView() }
-        
         return viewController
     }
     
@@ -39,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .white
         return navigationController
     }
-
+    
+    
 }
 

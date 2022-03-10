@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension WeatherViewController {
+extension UIViewController {
     
     func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style, completionHandler: @escaping (String) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
