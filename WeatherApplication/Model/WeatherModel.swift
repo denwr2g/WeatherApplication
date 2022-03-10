@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct Weather {
+    @UserDefault(key: "test13", defaultValue: [])
+    static var model: [WeatherModel]
+}
+
 struct WeatherModel: Codable {
     let conditionId: Int
     let cityName: String
@@ -37,6 +42,29 @@ struct WeatherModel: Codable {
         }
     }
     
+    init(conditionId: Int, cityName: String, temperature: Double) {
+        self.conditionId = conditionId
+        self.cityName = cityName
+        self.temperature = temperature
+    }
     
-
+    init(from decoder: Decoder) throws {
+        let contreiner = try decoder.container(keyedBy: CodingKeys.self)
+        self.conditionId = try contreiner.decode(Int.self, forKey: .conditionID)
+        self.cityName = try contreiner.decode(String.self, forKey: .cityName)
+        self.temperature = try contreiner.decode(Double.self, forKey: .temperature)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+       var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(conditionId, forKey: .conditionID)
+        try container.encode(cityName, forKey: .cityName)
+        try container.encode(temperature, forKey: .temperature)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case conditionID
+        case cityName
+        case temperature
+    }
 }

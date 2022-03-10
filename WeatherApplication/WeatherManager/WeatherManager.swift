@@ -13,20 +13,17 @@ class WeatherManager {
     
     private init() {}
     
-    var tableItems = [WeatherModel?]() {
-        didSet {
-            UserDefaultsManager.shared.save()
-        }
-    }
+    var tableItems: [WeatherModel] = Weather.model
     
-    func addItemToTable(weatherItem: WeatherModel?) {
-              
-        guard let weatherItem = weatherItem else { return }
+    func addItemToTable(weatherItem: WeatherModel) {
+        
         
         for item in tableItems {
-            if weatherItem.cityName == item?.cityName { return }
+            if weatherItem.cityName == item.cityName { return }
         }
         tableItems.append(weatherItem)
+        
+        Weather.model.append(weatherItem)
     }
     
     func getValue(index: Int) -> WeatherModel? {

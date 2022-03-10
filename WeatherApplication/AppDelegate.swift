@@ -11,13 +11,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var navigationController: UINavigationController?
+    var weatherViewController: WeatherViewController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = makeNavigationController()
+        setupNavigationController()
+        window?.rootViewController = navigationController
         
         return true
     }
@@ -25,17 +28,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func makeWeatherViewController() -> UIViewController {
         let viewController = WeatherViewController()
         let weatherViewModel = WeatherViewModel()
+        weatherViewModel.onGoToSearchViewController = { [weak self] in
+            guard let self = self else { return }
+            self.navigationController?.pushViewController(self.makeSearchViewController(weatherViewController: viewController), animated: true)
+        }
+        
         viewController.configure(viewModel: weatherViewModel)
         return viewController
     }
     
-    func makeNavigationController() -> UINavigationController {
-        let navigationController = UINavigationController(rootViewController: makeWeatherViewController())
-        navigationController.navigationBar.barTintColor = .systemBlue
-        UINavigationBar.appearance().tintColor = .white
-        return navigationController
+    func makeSearchViewController(weatherViewController: WeatherViewController) -> UIViewController {
+        let viewController = SearchViewController()
+        let searchViewModel = SearchViewModel()
+        
+        searchViewModel.onOpenWeatherViewController = { [weak self] in
+            guard let self = self else { return }
+            weatherViewController.updateTableViewContent()
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        viewController.configure(viewModel: searchViewModel)
+        return viewController
     }
     
-    
+    func setupNavigationController() {
+        navigationController = UINavigationController(rootViewController: makeWeatherViewController())
+        navigationController?.navigationBar.barTintColor = .systemBlue
+        UINavigationBar.appearance().tintColor = .white
+        
+    }
 }
 
