@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class SearchViewControllerView: UIView {
+final class SearchWeatherView: UIView {
     
     let inputTextField = UITextField()
     let searchButton = UIButton(type: .system)
@@ -30,7 +30,7 @@ final class SearchViewControllerView: UIView {
     }
 }
 
-private extension SearchViewControllerView {
+private extension SearchWeatherView {
     
     func setupItems() {
         backgroundColor = .systemBlue

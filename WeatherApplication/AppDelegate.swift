@@ -33,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.navigationController?.pushViewController(self.makeSearchViewController(weatherViewController: viewController), animated: true)
         }
         
+        weatherViewModel.onGoToDetailViewController = { [weak self] weather in
+            guard let self = self else { return }
+            self.navigationController?.present(self.makeDetailViewController(weather: weather), animated: true, completion: nil)
+        }
+        
         viewController.configure(viewModel: weatherViewModel)
         return viewController
     }
@@ -51,11 +56,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return viewController
     }
     
+    func makeDetailViewController(weather: WeatherModel) -> UIViewController {
+        let viewContoller = DetailViewController()
+        let viewModel = DetailViewModel()
+        viewContoller.configItems(for: weather)
+        viewContoller.configure(viewModel: viewModel)
+        return viewContoller
+    }
+    
     func setupNavigationController() {
         navigationController = UINavigationController(rootViewController: makeWeatherViewController())
         navigationController?.navigationBar.barTintColor = .systemBlue
         UINavigationBar.appearance().tintColor = .white
-        
     }
+    
+   
 }
 

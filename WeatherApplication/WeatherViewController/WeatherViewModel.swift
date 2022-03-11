@@ -14,13 +14,18 @@ final class WeatherViewModel {
     
     var onUpdateTable: (() -> Void)?
     var onGoToSearchViewController: (() -> Void)?
-    
+    var onGoToDetailViewController: ((WeatherModel) -> Void)?
+
     func shouldUpdateTable() {
         self.onUpdateTable?()
     }
     
     func shouldGoToSearchViewController() {
         self.onGoToSearchViewController?()
+    }
+    
+    func shouldGoToDetailViewController(with weatherModel: WeatherModel) {
+        self.onGoToDetailViewController?(weatherModel)
     }
     
     func getValue(index: Int) -> WeatherModel? {
@@ -31,5 +36,9 @@ final class WeatherViewModel {
         return weatherManager.tableItems.count
     }
     
+    func remove(index: Int) {
+        WeatherManager.shared.tableItems.remove(at: index)
+        Weather.model.remove(at: index)
+    }
     
 }

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct Weather {
-    @UserDefault(key: "test13", defaultValue: [])
+    @UserDefault(key: "test14", defaultValue: [])
     static var model: [WeatherModel]
 }
 
@@ -18,27 +19,27 @@ struct WeatherModel: Codable {
     let temperature: Double
     
     var temperatureString: String {
-        return String(format: "%.2f", temperature) + "° C"
+        return String(format: "%.0f", temperature) + "°"
     }
-    
-    var conditionName: String {
+        
+    var conditionName: (String, UIColor) {
         switch conditionId {
         case 200...232:
-            return "cloud.bolt.rain"
+            return ("cloud.bolt.rain", .systemGray)
         case 300...321:
-            return "cloud.drizzle"
+            return ("cloud.drizzle", .systemGray)
         case 500...531:
-            return "cloud.rain"
+            return ("cloud.rain", .systemGray)
         case 600...622:
-            return "cloud.snow"
+            return ("cloud.snow", .systemCyan)
         case 701...781:
-            return "smoke"
+            return ("smoke", .lightGray)
         case 800:
-            return "sun.max"
+            return ("sun.max", .systemYellow)
         case 801...804:
-            return "cloud"
+            return ("cloud", .systemBlue)
         default:
-            return "nosign"
+            return ("nosign", .black)
         }
     }
     

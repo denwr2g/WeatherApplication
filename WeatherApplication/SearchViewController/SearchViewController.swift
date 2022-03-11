@@ -10,7 +10,7 @@ import UIKit
 class SearchViewController: UIViewController {
     
     private var searchViewModel: SearchViewModel?
-    var searchViewControllerView = SearchViewControllerView()
+    var searchViewControllerView = SearchWeatherView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ private extension SearchViewController {
     @objc func addCity() {
         guard let cityName = self.searchViewControllerView.inputTextField.text else { return }
         self.searchViewControllerView.inputTextField.endEditing(true)
-        self.searchViewModel?.fetchWeather(for: cityName)       
+        self.searchViewModel?.fetchWeather(for: cityName)
     }
 }
 
