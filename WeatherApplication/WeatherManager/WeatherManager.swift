@@ -17,7 +17,6 @@ class WeatherManager {
     
     func addItemToTable(weatherItem: WeatherModel) {
         
-        
         for item in tableItems {
             if weatherItem.cityName == item.cityName { return }
         }

@@ -36,9 +36,9 @@ final class WeatherViewModel {
         return weatherManager.tableItems.count
     }
     
-    func remove(index: Int) {
-        WeatherManager.shared.tableItems.remove(at: index)
+    func removeCell(index: Int) {
         Weather.model.remove(at: index)
+        WeatherManager.shared.tableItems.remove(at: index)
     }
     
 }

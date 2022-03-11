@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct Weather {
-    @UserDefault(key: "test14", defaultValue: [])
+    @UserDefault(key: "test21", defaultValue: [])
     static var model: [WeatherModel]
 }
 

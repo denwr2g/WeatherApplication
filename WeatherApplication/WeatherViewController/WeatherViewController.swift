@@ -17,7 +17,7 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         configTable()
         configNavigationItems()
-        
+        print(Weather.model)
     }
     
     // MARK: - WeatherViewController Methods
@@ -98,7 +98,7 @@ extension WeatherViewController: UITableViewDelegate {
         if editingStyle == .delete {
             tableView.beginUpdates()
             
-            viewModel?.remove(index: indexPath.row)
+            viewModel?.removeCell(index: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             tableView.endUpdates()
