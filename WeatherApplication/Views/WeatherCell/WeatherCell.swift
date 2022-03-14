@@ -16,6 +16,6 @@ class WeatherCell: UITableViewCell {
     func configCell(_ weather: WeatherModel) {
         self.cityNameLabel.text = weather.cityName
         self.temperatureLabel.text = weather.temperatureString
-        self.weatherImageView.image = UIImage(systemName: weather.conditionName)
+        self.weatherImageView.image = UIImage(systemName: weather.conditionName.0)
     }
 }

@@ -11,21 +11,21 @@ import UIKit
 final class WeatherViewModel {
     
     private let weatherManager = WeatherManager.shared
-    private let userDefaultsManager = UserDefaultsManager.shared
     
     var onUpdateTable: (() -> Void)?
-    var onShowAlert: (() -> Void)?
-    
-    init() {
-        UserDefaultsManager.shared.getItems()
-    }
-    
+    var onGoToSearchViewController: (() -> Void)?
+    var onGoToDetailViewController: ((WeatherModel) -> Void)?
+
     func shouldUpdateTable() {
         self.onUpdateTable?()
     }
     
-    func shouldShowAlert() {
-        self.onShowAlert?()
+    func shouldGoToSearchViewController() {
+        self.onGoToSearchViewController?()
+    }
+    
+    func shouldGoToDetailViewController(with weatherModel: WeatherModel) {
+        self.onGoToDetailViewController?(weatherModel)
     }
     
     func getValue(index: Int) -> WeatherModel? {
@@ -36,24 +36,9 @@ final class WeatherViewModel {
         return weatherManager.tableItems.count
     }
     
-    func addItemToTable(item: WeatherModel) {
-        weatherManager.addItemToTable(weatherItem: item)
-    }
-    
-    func fetchWeather(for city: String) {
-        NetworkManager.fetchWeather(for: city) { [weak self] result in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let weather):
-                    self.addItemToTable(item: weather)
-                    self.shouldUpdateTable()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+    func removeCell(index: Int) {
+        Weather.model.remove(at: index)
+        WeatherManager.shared.tableItems.remove(at: index)
     }
     
 }

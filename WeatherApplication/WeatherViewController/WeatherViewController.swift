@@ -21,16 +21,12 @@ class WeatherViewController: UIViewController {
     
     // MARK: - WeatherViewController Methods
     
-    private func updateTableViewContent() {
+    public func updateTableViewContent() {
         tableView.reloadData()
     }
     
     func configure(viewModel: WeatherViewModel) {
         self.viewModel = viewModel
-        viewModel.onUpdateTable = { [weak self] in
-            guard let self = self else { return }
-            self.updateTableViewContent()
-        }
     }
     
 }
@@ -52,17 +48,11 @@ private extension WeatherViewController {
     
     func configNavigationItems() {
         navigationItem.title = "Weather App"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCity))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToSearchViewController))
     }
     
-    @objc func addCity() {
-        viewModel?.onShowAlert = {
-            self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [weak self] city in
-                guard let self = self else { return }
-                self.viewModel?.fetchWeather(for: city)
-            }
-        }
-        viewModel?.shouldShowAlert()
+    @objc func goToSearchViewController() {
+        viewModel?.shouldGoToSearchViewController()  
     }
     
 }
@@ -78,7 +68,7 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell,
-              let weather = viewModel?.getValue(index: indexPath.row) else { return UITableViewCell.init() }
+              let weather = viewModel?.getValue(index: indexPath.row) else { return .init() }
         
         cell.configCell(weather)
         cell.selectionStyle = .none
@@ -94,6 +84,23 @@ extension WeatherViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
+        guard let weather = viewModel?.getValue(index: indexPath.row) else { return }
+
+        viewModel?.shouldGoToDetailViewController(with: weather)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            
+            viewModel?.removeCell(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.endUpdates()
+        }
     }
 }

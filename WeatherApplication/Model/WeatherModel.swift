@@ -6,6 +6,12 @@
 //
 
 import Foundation
+import UIKit
+
+struct Weather {
+    @UserDefault(key: "test21", defaultValue: [])
+    static var model: [WeatherModel]
+}
 
 struct WeatherModel: Codable {
     let conditionId: Int
@@ -13,30 +19,53 @@ struct WeatherModel: Codable {
     let temperature: Double
     
     var temperatureString: String {
-        return String(format: "%.2f", temperature) + "° C"
+        return String(format: "%.0f", temperature) + "°"
     }
-    
-    var conditionName: String {
+        
+    var conditionName: (String, UIColor) {
         switch conditionId {
         case 200...232:
-            return "cloud.bolt.rain"
+            return ("cloud.bolt.rain", .systemGray)
         case 300...321:
-            return "cloud.drizzle"
+            return ("cloud.drizzle", .systemGray)
         case 500...531:
-            return "cloud.rain"
+            return ("cloud.rain", .systemGray)
         case 600...622:
-            return "cloud.snow"
+            return ("cloud.snow", .systemCyan)
         case 701...781:
-            return "smoke"
+            return ("smoke", .lightGray)
         case 800:
-            return "sun.max"
+            return ("sun.max", .systemYellow)
         case 801...804:
-            return "cloud"
+            return ("cloud", .systemBlue)
         default:
-            return "nosign"
+            return ("nosign", .black)
         }
     }
     
+    init(conditionId: Int, cityName: String, temperature: Double) {
+        self.conditionId = conditionId
+        self.cityName = cityName
+        self.temperature = temperature
+    }
     
-
+    init(from decoder: Decoder) throws {
+        let contreiner = try decoder.container(keyedBy: CodingKeys.self)
+        self.conditionId = try contreiner.decode(Int.self, forKey: .conditionID)
+        self.cityName = try contreiner.decode(String.self, forKey: .cityName)
+        self.temperature = try contreiner.decode(Double.self, forKey: .temperature)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+       var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(conditionId, forKey: .conditionID)
+        try container.encode(cityName, forKey: .cityName)
+        try container.encode(temperature, forKey: .temperature)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case conditionID
+        case cityName
+        case temperature
+    }
 }
