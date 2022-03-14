@@ -12,6 +12,7 @@ final class SearchWeatherView: UIView {
     
     let inputTextField = UITextField()
     let searchButton = UIButton(type: .system)
+    var onButtonTap: ((String?) -> Void)?
     
     init() {
         super.init(frame: .zero)
@@ -28,12 +29,33 @@ final class SearchWeatherView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    private func shouldButtonTapped(city: String?) {
+        self.onButtonTap?(city)
+    }
+}
+
+extension SearchWeatherView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        inputTextField.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if inputTextField.text != "" {
+            return true
+        } else {
+            inputTextField.placeholder = "Type something"
+            return false
+        }
+    }
 }
 
 private extension SearchWeatherView {
     
     func setupItems() {
         backgroundColor = .systemBlue
+        inputTextField.delegate = self
     }
     
     func setupInputTextField() {
@@ -54,11 +76,11 @@ private extension SearchWeatherView {
     
     func setupSearchButton() {
         addSubview(searchButton)
-        
         searchButton.backgroundColor = UIColor.white
         searchButton.layer.cornerRadius = 15
         searchButton.setTitle("Add", for: UIControl.State.normal)
         searchButton.tintColor = UIColor.systemBlue
+        searchButton.addTarget(self, action: #selector(addCity), for: .touchUpInside)
     }
     
     func setupLayout() {
@@ -74,6 +96,12 @@ private extension SearchWeatherView {
             make.left.right.equalToSuperview().inset(30)
             make.centerX.equalToSuperview()
         }
+    }
+    
+    @objc func addCity() {
+        guard let cityName = inputTextField.text else { return }
+        inputTextField.endEditing(true)
+        shouldButtonTapped(city: cityName)
     }
     
 }

@@ -18,6 +18,7 @@ class DetailWeatherView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         addVerticalStackView()
         addCurrentTimeLabel()
         addCityNameLabel()

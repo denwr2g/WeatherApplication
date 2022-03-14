@@ -17,7 +17,6 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         configTable()
         configNavigationItems()
-        print(Weather.model)
     }
     
     // MARK: - WeatherViewController Methods

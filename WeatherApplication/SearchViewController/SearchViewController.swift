@@ -14,8 +14,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        searchViewControllerView.inputTextField.delegate = self
+        configureItems()
     }
     
     func configure(viewModel: SearchViewModel) {
@@ -25,9 +24,11 @@ class SearchViewController: UIViewController {
 
 private extension SearchViewController {
     
-    func configureUI() {
-        
-        searchViewControllerView.searchButton.addTarget(self, action: #selector(addCity), for: .touchUpInside)
+    func configureItems() {
+        searchViewControllerView.onButtonTap = { [weak self] city in 
+            guard let self = self, let city = city else { return }
+            self.searchViewModel?.fetchWeather(for: city)
+        }
         
         view.addSubview(searchViewControllerView)
         searchViewControllerView.snp.makeConstraints { make in
@@ -35,25 +36,6 @@ private extension SearchViewController {
         }
     }
     
-    @objc func addCity() {
-        guard let cityName = self.searchViewControllerView.inputTextField.text else { return }
-        self.searchViewControllerView.inputTextField.endEditing(true)
-        self.searchViewModel?.fetchWeather(for: cityName)
-    }
 }
 
-extension SearchViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.searchViewControllerView.inputTextField.endEditing(true)
-        return true
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if searchViewControllerView.inputTextField.text != "" {
-            return true
-        } else {
-            searchViewControllerView.inputTextField.placeholder = "Type something"
-            return false
-        }
-    }
-}
+
